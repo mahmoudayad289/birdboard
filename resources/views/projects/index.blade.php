@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+    @extends('layouts.app')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    @section('content')
+        <div>
+            <header class="flex my-5">
+                <h3 class="text-gray-600 text-lg ">My Projects</h3>
+                <a class="ml-auto blue-button" href="{{ route('projects.create') }}">New Project</a>
+            </header>
 
-        <!-- Styles -->
-    </head>
-    <body>
-
-    @forelse($projects as $project)
-       <article>
-           <h3><a href="{{ $project->path() }}">{{ $project->title }}</a></h3>
-           <p>{{  $project->description }}</p>
-       </article>
-    @empty
-        <p>NO records</p>
-    @endforelse
-    </body>
-</html>
+            <main class="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                @forelse($projects as $project)
+                    @include('projects._card')
+                @empty
+                    <p>No records</p>
+                @endforelse
+            </main>
+        </div>
+    @endsection

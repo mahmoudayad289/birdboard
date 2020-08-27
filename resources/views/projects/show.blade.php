@@ -1,20 +1,39 @@
+@extends('layouts.app')
 
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('content')
 
-        <title>show</title>
+    <header class="flex my-5">
+        <p class="text-gray-600 text-lg ">
+            <a href="{{ route('projects.index') }}">My Projects</a> / {{ $project->title }}</p>
+        <a class="ml-auto blue-button" href="{{ route('projects.create') }}">New Project</a>
+    </header>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <main>
+        <div class="grid grid-cols-3 gap-6 my-5">
 
-        <!-- Styles -->
-    </head>
-    <body>
-    <article>
-        <h3>{{ $project->title }}</h3>
-        <p>{{  $project->description }}</p>
-    </article>
-    </body>
-</html>
+            <div class="col-span-2">
+                <!-- start task -->
+                <div class="mb-6">
+                    <h2 class="text-gray-600 text-lg mb-3">Tasks</h2>
+
+                    <div class="card my-2">lorem you</div>
+                    <div class="card my-2">lorem you</div>
+                    <div class="card my-2">lorem you</div>
+                </div>
+
+                <!-- start generate note -->
+                <div>
+                    <h2 class="text-gray-600 text-lg mb-3 ">General note</h2>
+                    <textarea class="w-full card  my-2 h-40"></textarea>
+                </div>
+            </div>
+
+
+            <div class="col-span-1 ">
+                @include('projects._card')
+                <a href="{{ route('projects.index') }}">Go Back</a>
+            </div>
+        </div>
+    </main>
+@endsection
+

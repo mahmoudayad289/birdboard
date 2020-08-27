@@ -1,25 +1,25 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+   <div>
+       <form action="{{ route('projects.store') }}" method="post">
+       @csrf
+       <!-- title input   -->
+           <div class="form-group">
+               <label for="title">title:</label>
+               <input type="text" id="title" class="form-control" name="title">
+           </div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+           <!-- description input   -->
+           <div class="form-group">
+               <label for="description">description:</label>
+               <textarea type="text" id="description" class="form-control" name="description"></textarea>
+           </div>
 
-        <!-- Styles -->
-    </head>
-    <body>
-
-    @forelse($projects as $project)
-       <article>
-           <h3><a href="{{ $project->path() }}">{{ $project->title }}</a></h3>
-           <p>{{  $project->description }}</p>
-       </article>
-    @empty
-        <p>NO records</p>
-    @endforelse
-    </body>
-</html>
+           <div class="form-group">
+               <button type="submit" class="btn btn-info text-white">submit</button>
+               <a class="btn btn-success" href="{{ route('projects.index')  }}">Cancel</a>
+           </div>
+       </form>
+   </div>
+@endsection

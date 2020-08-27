@@ -8,41 +8,27 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ProjectTest extends TestCase
+class ManageProjectTest extends TestCase
 {
 
     use WithFaker , RefreshDatabase;
 
 
-    public function test_a_project_can_require_a_owner()
-    {
-//        $this->withoutExceptionHandling();
-        $attributes = factory(Project::class)->raw();
-        $this->post(route('projects.store') , $attributes)->assertRedirect('login');
-    }
-
-
-    public function test_guests_cannot_see_projects()
+    public function test_guests_cannot_control_to_project()
     {
         $this->get(route('projects.index'))->assertRedirect('login');
-    }
-
-    public function test_guests_cannot_view_single_project()
-    {
         $project = factory(Project::class)->create();
         $this->get($project->path())->assertRedirect('login');
+        $this->post(route('projects.store') , $project->toArray())->assertRedirect('login');
     }
-
 
     public function test_only_auth_user_can_create_a_project() // make test for store data in database
     {
-        $this->withoutExceptionHandling();
 
         $this->actingAs(factory(User::class)->create());
+        $this->get(route('projects.create'))->assertStatus(200);
 
         $attributes = factory(Project::class)->raw();
-
-
         $this->post(route('projects.store') , $attributes)->assertRedirect(route('projects.index'));
 
         $this->get(route('projects.index'))->assertSee($attributes['title']);
